@@ -1,0 +1,93 @@
+
+-------------------------
+
+Linux Dağıtımalrından bazıları :
+	- Ubuntu 
+	- Kali Linux 	(Siber)
+	- Debian
+	- Parrot Os 	(Siber)
+	- Black Arch	(Siber)
+
+-------------------------
+
+	Komutlar
+
+* setxkbmap tr
+	- Klavyeyi türkçe yapar
+
+* mv
+	- Taşıma, dosya ismini değitirme
+
+* cp
+	- kopyalama
+
+-------------------------
+
+	Linux Klasörleri
+
+* bin (binary) : terminalden çalıştırdığımız komutların çalıştırılması için programlar vardı
+
+* boot : linux boot edilirken gereken dosyalar vardır
+
+* dev : Donanım dosyaları vardır
+
+* etc : Konfigürasyon ve ayar dosyaları vardır
+
+* home : kullanıcıların klasörleri burada bulunur
+
+* lib :
+
+* lib32 :
+
+* lib64 :
+
+* libx32 :
+
+* media : dcrom, flash bellek gibi araçlar bulunur
+
+* mnt : 
+
+* opt : 
+
+* proc : sistemin işlettiği süreçleri içerisinde barındırır
+
+* root : root kullanısının klasörü
+
+* run :
+
+* sbin (system binary) : Sistemlerin çalıştırdığı, daha çok root kullanıcısının çalıştırabildiği komutlar için programlar vardır
+
+* srv : servis dosyaları burada bulunur
+
+* sys :
+
+* tmp : Geçisi dosyalar mevcuttur
+
+* usr : kullanıcıların çalıştırabileceği app'lar burada bulunur
+
+* var : Devamlı değişen dosyalar burada bulunur
+
+------------------------------
+
+	LINUX PAKET YÖNETİCİSİ
+
+* "apt" veya "apt-get" komutları kullanılır
+* Paket yüklemek sudo yetkisi ister
+
+* apt update
+* apt upgrade
+* apt search wireshark 
+	- wireshark ile alakalı indirebilecek linkleri gösterir
+* apt install wireshark
+	- bu paketi indirir
+* apt list --upgradable
+	- güncellenebilecek paketleri listeler
+
+-----------------------------
+
+	TEXT EDITORS
+
+* vim
+* nano
+
+----------------------------

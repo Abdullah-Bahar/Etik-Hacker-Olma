@@ -1,0 +1,40 @@
+
+-----------------------------
+
+	NC (Netcat)
+
+* "nc" komutu ile çalışır. 
+
+* Bir ağ aracıdır. Hızlı ve esnek bir şekilde TCP/UDP bağlantıları kurmak, dinlemek ve veri aktarmak için kullanılır.
+
+* Özellikleri :
+	- Port dinler
+	- uzak bilgisayarlara bağlanır
+	- Dosya aktarır
+	- Beli bir makinanın ip'lerini tarar
+	- IPv4, TCP, UDP destekler
+	- HTTP, SMTP gibi protokollerin elle testisni gerçekleştirebilir.
+
+
+* Sıkıntıları :
+	- Şifreleme desteklemez.
+	- Modern güvenlik standartlarına uyumlu değildir.
+	- Daha az özelleştirme ve gelişmiş seçenekler sunar.
+
+-----------------------------
+
+	NCAT (Nmap Ncat)
+
+* "ncat" komutu ile çalışır
+
+* nmap tarafından geliştirilmiştir.
+
+* Netcat'in gelişmiş versiyonudur. Netcat'in basit ve etkili işlevlerini temel alır, ancak modern ağ güvenliği ve 
+protokolleri ile uyumlu olacak şekilde geliştirilmiştir.
+
+* Özellikleri :
+	- Şifreleme desteği (TSL/SSL)
+	- IPc6, proxy, SOCKS gibi modern protokolleri de destekler
+	- Geri kalanı netcet gibi
+
+----------------------------

@@ -1,0 +1,28 @@
+
+--------------------------------
+
+	MAC ADRESİ DEĞİŞTİRME
+
+* "macchanger" aracını kullanarak işlemler yapabiliriz.
+	- macchanger --help : ilgili komut hakkında yardım
+	- macchanger --random eth0 : eth0 network arayüzününün mac edresini değiştirir.
+
+
+* Network'te bir sorun olursa 
+	- service NetworkManager restart : Netwok ayarlarına restart atar.
+
+
+* Mac adreisni değiştrimek için farklı bir yöntem :
+	- ifconfig eth0 hw ether 00:00:11:11:00:00 : rastgele bir mac adresi sallayabiliriz.
+
+--------------------------------
+
+	MAC ADRESİ DEĞİŞTİRME PROBLEMİ İÇİN
+
+	- service NetworkManager stop
+	- ifconfig wlan0 down
+	- macchanger -r wlan0
+	- ifconfig wlan0 up
+	- service NetworkManager start
+
+-----------------------------------

@@ -1,0 +1,18 @@
+
+--------------------------
+
+	"nmcli" KOMUTU  ?
+
+* Network Manager Comamnd Line Interface
+
+--------------------------
+
+	ETHETNET İÇİN DİNLEME ?
+
+* Promiscuous Mode (Dinleme Modu)
+	- ifconfig eth0 promisc
+
+* Tcpdump aracı
+	-trpdump -i eth0 
+
+--------------------------

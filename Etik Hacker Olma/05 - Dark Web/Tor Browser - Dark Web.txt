@@ -1,0 +1,68 @@
+
+-----------------------------
+
+	TOR BROWSER KURMAK
+
+* apt install tor : tor servislerini kuruyoruz
+
+* tor web sitesinden tor'u indiriyoruz
+	- "tar -xvf ...." komutu ile tar'dan indirdiğimiz dosyayı çıkarıyoruz
+
+* İndirilen zip dosyasını zipten çıkarıyoruz
+	- unzip komutu ile zipten çıkarabiliriz
+
+* Terminalden zipren çıkardığımız dosyaya giriyoruz
+
+* "./start-tor-browser.desktop" yazarak dosyayı çalıştırıyoruz
+
+* tor browser'ı root'ta kurmaya çalıştığımızda hata alırız. Çünkü tor root'ta kurulmasını istemez
+
+* root'ta çalıştırılmaması için bazı ayarlamalar yapıcaz
+
+* apt insatall leafpad -> diyerek bu metin editörünü kuruyoruz
+
+* zipten çıkardığımız klasör için -> browser -> start-tor-browser -> sağ tık leafpad ile aç
+	- tor browser'ın shell scrip ile yazılmış kıdlarını görüyoruz.
+
+* dosya içinde root ile yüklenemez şeklinde hata mesajınu veren if ile başlayıp fi ile biten kısmı dosyadan siliyoruz.
+Ya da başıan "#" koyarak yorum satırı yapıyoruz
+
+* "./start-tor-browser.desktop" bunu tekrardan çalıştırıyoruz
+
+
+NOT : Root'ta çalıştıırlamaz hatası almamak için yaptığımız düzenlemeler bir işe yaramıyor.
+Bunun için kali'de start'ı veriyoruz.
+
+* "tor-browser" dosyasını opt klasörüne taşıdık.
+	- Taşıdıktan sonra "start-tor-browser.desktop" dosyasını konfigüre etmek gerekebilir.
+	Çünkü dowlond klasöründe başlattığımız için bu dosyada dowlond klasörünün yolu gözükmekte
+
+
+* "./start-tor-browser.desktop --register-app" komutu ile uygulamaların gözüktüğü yere ekelyebiliriz.
+* "./start-tor-browser.desktop --remove-app" komutu ile uygulamaların gözüktüğü yerden kaldırabiliriz.
+* Ayrıca uygulamaların bulunduğu dizin :
+	- /home/kali/.local/share/applications
+
+-----------------------------
+
+	DARK WEB'DE GEZİNME
+
+* Vpn açıp tor browser'a girdikten sonra
+
+* tor üzerinden .onion uzantılı sitelere girebiliriz.
+	- Bu sitelere normal browser'lar üzerinden eişemeyiz
+
+* tor browser üzerinden gezinmek için önce bazı güvenlik ayarlamaları yapabiliriz
+	- Gelişmiş güvenlik ayarları kısmında aşağıdaki gibi seçenejler olacaktır
+		> Standart (Default)
+		> Safer : web sitelerinde bulunan javascript kodlarının çalışmasını engeller. (Bunu seçiyoruz genelde)
+		> Safest : Daha da sıkı oluyor.
+
+* Google gibi search verilerini tutmayan arama motrunu kullanmak için tor borwser'dan "duckduckgo.com" ye gidiyoruz  
+
+* "hidden wiki" diye bir arama yaparsak gelcek olan sitelerde ilgili .onion uzantılı sitelerin bulunduğu listeler
+üzerinden gezinmeye başalyabiliriz.
+	- hidden wiki ile ilgili istenin adresi değişebilen bir web sitesi. Bunun için çalışan linklerin bulunduğu siteyi
+	bulmak için denemeler yapmak gerekebilir.
+
+-----------------------------

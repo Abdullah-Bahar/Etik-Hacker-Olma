@@ -1,0 +1,61 @@
+
+-----------------------------
+
+	INIT SİSTEMİ NEDİR ?
+
+* Init sistemi, bir linux çekirdeği yüklendikten sonra çalıştırılan ilk süreçtir (PID 1)
+
+* Görevi, sistemdeki diğer tüm süreçleri başlatmak, yönetmek ve durdurmaktır.
+
+* Inıt sistemi şunları yapar :
+	
+	1. Servislerin başlatılması
+	2. Süreçlerin yönetimi 	: Çalışan süreçlerin takibini yapar
+	3. Runlevel Yönetimi 	: Sistemi hangi modda çalışacağını belirler (GUI, CLI) 
+
+
+-----------------------------
+
+	Sysv INIT
+
+* Linux'un eski sürümlerinde kullanılan klasik bir init sistemidir.
+
+* "/etc/init.d" dizindeki scriptler üzerinden servis başlatma ve durdurma işlemleri yapar
+
+* Eksikleri :
+	- Paralel işlem yapamaz (Servisleri sırası ile başlatır)
+	- Yavaş ve esnek değildir.
+
+-----------------------------
+
+	Systemd
+
+* Modern init sistemidir.
+
+* Özellikler :
+	- Paralel servis başlatma
+	- Dinamik servis yönetimi
+	- Unit File Kullanımı 
+	- Log yönetimi
+	- Burada "Runlevel" yerine "targer" kullanılır.
+
+* "/etc/systemd/system/" -> altında unit doyalar yani servislerin özelleştirilebilir konfigürasyon dosyaları vardır.
+* "/lib/systemd/system/" -> çalıştırılan servis dosyaları buradadır.
+
+-----------------------------
+
+	"service" ve "systemctl" FARKI / SERVİS YÖNETİMİ
+
+* service
+	- Eski init sistemleri ile uyumludur
+	- service [servis_adi] start/stpo/restart
+
+* systemctl
+	- modern systemd sistemelrin kullanılır
+	- systemctl start [servis_adi]
+
+-----------------------------
+
+NOT : Geriye dönük uyumluluk adına "service" ve "systemd" komutlarının her ikisi de kullanılmaktadır.
+
+-----------------------------

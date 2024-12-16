@@ -1,0 +1,109 @@
+
+-------------------------
+
+	Strom Breaker
+
+* Kulllanıcıların kamresını, konumuna erişmemizi sağlayan linkler oluşturur.
+
+* Kurulum 
+	- git clone https://github.com/ultrasecurity/Storm-Breaker
+	- cd Storm-Breaker
+	- sudo bash install.sh
+	- sudo python3 -m pip install -r requirements.txt
+	- sudo python3 st.py
+
+-------------------------
+
+	Strom Breaker Ngrok Ayarı  
+
+-------------------------
+
+	HATA : externally-managed-environment
+
+* "bash install.sh" bunu çalıştırdığımız bu hatayı alambiliriz.
+	- kali içerisindeki apt ile pip çakışmasını önlemek adına karşılaştığımız bir hata
+
+* Bu hatayı çzömek için
+	- python3 -m venv .venv	
+		> Sanal bir ortam oluşturarak yüklediğimiz paketlerin kali geneline değilde proje özel sanal ortamda yüklemesini 
+		gerçekleştiriyoruz
+	- source .venv/bin/activate
+		> Sanal ortamda çalışmayı aktifleştiriyor 
+
+* Sanal ortamı oluşturduktan sonra tekrardan dosyaları çalıştırmayı deneyeceğiz
+
+* bash install.sh 
+	- Burada da bi ERROR daha verebilir
+
+* Eğer "bash install.sh" için tekrardan bir error verirse
+	
+	I.
+	- python3 -m pip install -r requirements.txt
+		> Bunun düzgün çalışıp çalışmadığına bakabilir.
+		> Eğer bu komut çalışıyorsa .py uzantılı dosyamızı çalıştırıp aracı kullanamaya başalyabiliriz.
+	- pyhton3 st.py
+		> Var olan hata programın çalışmasını engellemiyorsa bir sorun yokmuş gibi devam ediyoruz
+
+	II.
+	- install.sh dosyası text editörde açıyoruz
+	- 177. satırını düzenliyoruz
+		> Önceki hali  : python3 -m pip install -r --break-system-packages ./requirements.txt
+		> Sonraki hali : python3 -m pip install --break-system-packages -r ./requirements.txt
+	- Bunu yaptıktan sonra "install.sh"ı çalıştırdığınızda ERROR'un gittiğini göreceksinizdir.
+
+* Bunu kullanabilmek için ngrok kurulumu gerekmektedir.
+
+-------------------------
+
+	NGROK
+
+* https://ngrok.com/
+	- ngrok'un resmi sitesi
+
+* Neden kullanılır 
+	- Tünelleme yapmak için
+	- Bilgisayarımızda var olan wep sunucusunu dünyaya açmak için 
+
+* Çalışma prensibi
+	- Local Web Sunucusu <-> Ngrok <-> Internet
+
+* Web sitesi üzerinden kayıt oluyoruz.
+
+* Linux için olan versiyonunu indiriyoruz.
+
+* Klasörde açıp sağ tık "Extract Here" yapıyoruz.
+
+NOT : .tar uzantılı dosyayı komut satırından açıp sitede gösterdiği komutu çalıştırdığımda işlemlerin devamında hata aldım. 
+Bunun için klasör sağ tık işlemini yaptım.
+	- Burada çalıştırıp hata aldığım kod :
+		> sudo tar -xvzf ~/Downloads/ngrok-v3-stable-linux-amd64.tgz -C /usr/local/bin
+	- Hata aldıktan sonra tüm ngrok dosyalarını silip baştan yükleyip işlemleri yaptım
+
+* Sonrasında site de gösterileren token'ı kullanarak komut çalıştırıyoruz
+	- ./ngrok config add-authtoken <token>
+	- /root/.config/ngrok/ tolundaki ngrok.yml dosyasına bu auth dosyası kaydediliyor.
+
+* Strom Breaker açtığımızda bizden istediği komutu çakıştırıyoruz
+	- ngrok http 2525 ya da ./ngrok http 2525
+
+* ngrok http 2525 çalıştırdıktan sonra çıkan ekranda "Forwardin" satırında ngrok'un oluşturduğu IP'yi görmekteyiz
+	- Bu url'yi koyalayıp web browser'dan açtığımızda bir uyarı mesajı verecektir. 
+	- Bu uyarı mesajının çıkmaması için ücretli hesap almak ya da bazı headerları eklemek gerek.
+
+* "Visit web" site dedikten sonra açılan keran için
+	- Kulalnıc adı : admin	
+	- password : admin
+
+* Admin panelinden giriş yaptıktan sonra orda gözüken linklere birilierine tıklattıktan sonra 
+	- Konum, Microfon, kamera vb. bilgileri elde edeceğiz
+
+* /opt/Storm-Breaker/storm-web yolundan insanlara göndermek istediğimiz web sitelerini düzenleyebiliyoruz.
+	- config dosyasından admin girişini de düzenleyebiliyoruz
+
+-------------------------
+
+	NGROK HATASININ SERVO İLE ÇÖZÜMÜ 
+
+* https://www.udemy.com/course/etik-hacker-olma-kursu/learn/lecture/37092692#questions/22228807
+
+-------------------------

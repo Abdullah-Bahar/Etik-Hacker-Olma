@@ -1,0 +1,194 @@
+
+------------------------------------
+
+* https://www.bettercap.org/modules/
+	- Bettercap'ın resmi web sitesi üzerinden ilgili aracın tüm modüllerine ulaşarak detaylı bilgi elde edebilirsiniz.
+
+------------------------------------
+
+	BETTERCAP
+
+* Modern bir MITM aracıdır.
+(ARP Spoofing, DNS Spoofing, SSL Stripping vb. teknikleri desteklemektedir)
+
+
+* Kurulumu
+	- apt install bettercap
+
+* Bettercap Başlatma
+	- bettercap -iface wlan0
+
+* Bettercap Komutları :
+	
+	- help 				
+		> Araçla ilgili genel bilgi ve içerdiği modül listesi verir
+	
+	- help <modül adı>
+		> İlgili modül hakkında bilgi verir.
+		> Modül içerisinde çalıştırılabilecek komutları verir.
+		> Modül içerisinde düzenleme yapılabilecek ayarları da verir. 
+
+------------------------------------
+
+	BETTERCAP İÇİN GENEL KOMUTLAR 
+
+* help MODULE: Bu komut, mevcut komutları listelemenizi sağlar. Eğer bir modül adı belirtirseniz, o modül için daha 
+ayrıntılı yardım gösterir.
+	- help arp.spoof 	(Example) 
+
+* active: Aktif olan modüllerin bir listesini gösterir.
+
+* quit: Bettercap oturumunu kapatır ve çıkış yapar.
+
+* sleep SECONDS: Verilen saniye sayısı kadar bekler.
+
+* get NAME: Değişkenin değerini alır. * karakteriyle tüm değişkenleri veya NAME* ile belirli bir desenle eşleşen 
+değişkenleri getirebilirsiniz.
+	- Modüller içerisindeki değişkenlerin değerlerini verir.
+
+* set NAME VALUE: Verilen değişkenin değerini ayarlar.
+	- Modüller içerisindeki değişkenlere değer ataması yapar.
+
+* read VARIABLE PROMPT: Kullanıcıdan giriş almanızı sağlar ve verilen değişkende saklar.
+
+* clear: Ekranı temizler.
+
+* include CAPLET: Başka bir capleti (Bettercap'in yapılandırma dosyası) yükler ve çalıştırır.
+
+* ! COMMAND: Shell komutunu çalıştırır ve çıktısını gösterir. Örneğin, ! ls komutu, sistemdeki dosya listesini gösterir.
+	- shell komutlarının başına "!" koyularak çalıştırılabilir
+
+* alias MAC NAME: MAC adresine verilen bir takma adı atar. Bu, daha sonra kolayca tanımak için faydalıdır.
+
+
+************************************
+	MODÜLLER
+************************************
+
+	net.probe
+
+* Ağdaki cihazları keşfetmek ve aktif cihazları tespit etmek için kullanılır.
+
+* Ping (ICMP Echo Request) paketleri göndererek ağdaki cihazların yanıt verip vermediğini kontrol eder.
+
+* Ağa bağlı cihazların IP adreslerini ve MAC adreslerini tespit eder.
+
+* Hedef ağdaki aktif cihazları bulur.
+
+------------------------------------
+
+	net.recon
+
+* Ağ keşfi yapmak için daha derinlemesine bir analiz sağlar.
+
+* Ağdaki cihazları, portlarını, OS'lerini tarar.
+
+* Hedef ağdaki cihazların sadece ip adreslerini değil, aynı zamanda ağ üzerindeki açık portlarını, servislerini ve 
+diğer detaylarını da keşfeder.
+
+* TCP bağlantıları, hizmetleri ve güvenlik açıklarını tarar.
+
+------------------------------------
+
+	arp.spoof
+
+* Arp spoofing saldırı gerçekleştiir. Arp tablosunu manipüle eder.
+
+------------------------------------
+
+	net.sniff
+
+* Ağdaki paketlerin dinlenmesini sağlar
+
+-----------------------------------
+
+	caplets
+
+* Bettercap üzerindeki çalıştırılabilir küçük kodlar. Script'ler olarak da düşünülebilir.
+
+* "/usr/share/bettercap/caplets/" yolundaki dosyalar
+	- Burada özelleştirebileceğimiz .cap dosyaları oluşturup çalıştırabiliriz.
+
+* caplets.show
+	- caplet komutlarını ve path'lerini verir.
+
+----------------------------------
+
+	hstshijack/hstshijack 
+
+* HSTS manipüle etmeye yarayan ilgili .cap dosyasını çalıştırır.
+
+* hstshijack cap'ini çalıştırmak http.proxy modülünü de aktif edecektir.
+
+* Bu saldırılar her zaman işe yaramayabilir.
+
+* Daha fazla işe yarayacağını düşündüğümüz "hstshijack" scriptlerini internetten bulup 
+"/usr/share/bettercap/caplets/hstshijack/" yolundaki dosyalar ile değiştirerek onları kullanabiliriz. 
+Klasör içindeki tüm dosyalar değiştirilmelidir.
+
+* hstshijack.cap dosyası içerisine yazılan web siteleri üzerinde değişiklikler yapmaya çalışır.
+	- İçerisi web sitesi eklemelerini yaparak istediğimiz web sitesini http'ye dönüştürmeye çalışmasını yapabiliriz.
+	
+	- Örnek olarak twitter'ı da bu web siteleri içerisine eklemek isteyelim :
+	- nano /usr/share/bettercap/caplets/hstshijack/hstshijack.cap
+		> set hstshijack.targets		twitter.com
+		> set hstshijack.replacements	twitter.corn
+		> dns.spoof.domains				twitter.corn
+
+-----------------------------------
+
+	HSTS (HTTP Strict Transport Security) - SSL STRİPİNG
+
+* HSTS etkin bir web sitesine bağlanmaya çalışan istemciler, yalnızca şifreli HTTPS bağlantıları kurabilir. HTTP üzerinden 
+bağlanmaya çalışılırsa, bu bağlantılar otomatik olarak HTTPS'ye yönlendirilir.
+
+* SSL Striping, Bir saldırganın HTTPS bağlantılarını HTTP'ye düşürmeye çalıştığı saldırı türüdür.
+
+SONUÇ : HTTPS sitelerini, SSL Striping saldırılarına karşı korumak için HSTS kullanılır.
+
+-----------------------------------
+
+************************************
+	ARP SALDIRISI ÖRNEĞİ
+************************************
+
+NOT : Wireless üzerinden yapacağımız "arp.spoof" saldırısı stabil çalışmayabilir.
+
+* net.recon on
+	- net.recon'u aktifleştiriyoruz ki ağdaki cihazları bulalım
+
+* net.show
+	- Ağdaki cizhazları görme
+
+* net.sniff on
+	- Ağda gösderilen paketleri yakalamak için
+
+NOT : arp.spoof modülündeki parametreleri düzenliyoruz
+
+* set arp.spoof.fulldublex true
+	- Arp saldırısını sadece ağa bağlı cihaza değil de router'a da yapmasını sağlar
+		> true : çift taraflı
+		> false : tek taraflı
+
+* set arp.spoof.internal true 
+	- Ağ içi haberleşme için
+		> true : hem ağ içi, hem de ağ dışı (SRC ve DST aynı ağ içinde)
+		> false : sadece ağ dışı dinleme 	(SRC veya DST'den birisi ağ dışında)
+
+* set arp.spoof.targets <ip_adresi> , <ip_adresi> , <...>
+	- Saldırmak istediğimiz hedef cihazların ip'si(leri)
+
+* arp.spoof on 
+	* arp saldırısını başlatıyoruz
+
+NOT : Eğer HTTP kulalnılıyorsa paketleri görürüz. Ancak  HTTPS kullanıyorsa sıkıntı.
+
+NOT : HSTS kullanan web sitelerine SSL Stiripin kullanrak HTTPS'leri HTTP'ye çeviricez
+
+NOT : Daha düzgün çalışan hstshijack paketini indirip içindekileri "/use/share/bettercap/caplets/hstshijack" yolundakilerle değiştiriyoruz
+	- https://github.com/atilsamancioglu/hstshijackcaplet : İndirdiğimiz site
+
+* hstshijack/hstshijack 
+	- İçerisine eklenen sitelere hedef ağdaki cihaz gitmeye çalıştığında onlara SSL Striping yaparak HTTPS isteklerini HTTP'ye çeviriyor. 
+
+------------------------------------

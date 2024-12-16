@@ -1,0 +1,14 @@
+
+-----------------------------------
+
+	KOMUTLAR
+
+- ifconfig eth0 down : Network arayüzünü kapatır
+- ifconfig eth0 up	 : Network arayüzünü başlatır
+
+- dhclient eth0 : Network arayüzüne yeni bir ip atar
+
+- iwconfig : wireless için ağ arayüzlerini verir.
+
+--------------------------------
+

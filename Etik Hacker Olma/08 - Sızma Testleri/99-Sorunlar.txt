@@ -1,0 +1,29 @@
+
+-----------------------------
+
+	SSH İÇİN
+
+SORUN : Unable to negotiate çözümü
+
+CEVAP : Arkadaşlar etc klasörüne girip ssh klasörünü root olarak açın, ssh_config dosyasını açıp  Host  * yazan satırın 
+altına 3 4 tane boşluk bırakıp HostkeyAlgorithms +ssh-rsa,ssh-dss yazın kaydedip çıkın öyle deneyin. Ben bu şekilde çözdüm.
+
+BENİM YAPTIĞIM :
+"Host *" yazan satırın altına bunları ekledim 
+	
+	HostkeyAlgorithms +ssh-rsa
+	PubkeyAcceptedKeyTypes +ssh-rsa
+
+-----------------------------
+
+	NCAT İNDİRME
+
+* apt install ncat
+	- bu komutu çalıştırdığında hata verrebiliyor
+
+* Hata aldığımzıda yapılması gerekenler
+	- apt clean
+	- apt update
+	- apt upgrade
+	- apt isntall ncat 
+-----------------------------

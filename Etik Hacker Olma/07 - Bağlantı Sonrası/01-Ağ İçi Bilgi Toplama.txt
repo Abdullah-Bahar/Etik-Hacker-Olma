@@ -1,0 +1,38 @@
+
+-------------------------------------
+
+	AĞ İÇİ BİLGİ TOPLAMA
+
+* Bir ağa bağlandıktan sonra, ağdaki cihazlar ve trafik hakkında bilgi toplamak için çeşitli araçlar kullanılır. 
+	- Netdiscover
+	- Nmap
+	- Wireshark
+	- Bettercap
+	- ...
+
+-------------------------------------
+
+	NETDİSCOVER
+
+* Netwok içerisinde ARP protokol yayını yaparak bu ağa bağlı cihazların IP ve MAC'lerini öğreniyoruz
+
+* netdiscover -i wlan0 -r 169.254.0.0/24 -c 10
+	-i : interface
+	-r : range, hangi ip rangi
+	-c : kaç kere istek atacak (default olarak 1'dir. ama bazen 1 kere de bulamayabiliyor)
+
+-------------------------------------
+
+	NMAP
+
+* Nmap, ağdaki cihazları, açık portları ve servisleri tespit etmek için güçlü bir araçtır. 
+
+* nmap 169.254.0.0/24
+
+-------------------------------------
+
+	Wireshark
+
+* Wireshark, ağ trafiğini analiz etmek ve paket seviyesinde inceleme yapmak için kullanılan bir araçtır.
+
+-------------------------------------

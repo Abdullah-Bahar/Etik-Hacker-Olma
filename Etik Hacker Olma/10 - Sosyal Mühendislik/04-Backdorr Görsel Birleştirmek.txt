@@ -1,0 +1,100 @@
+
+------------------------------
+
+* Backdoor'u bir resim gibi göstereceğiz. 
+
+* Elimizde var olan resmin icon halini arıyorsak eğer  
+	- "jpeg to ico" gibi bir search işleminde bunu kolaylıkla yapabiliriz.
+	
+* Elimizde 3 tane dosya olması gerek
+	- Backdoor (msfvenom'la ya da fatrat'le oluşturabilriz)
+	- Jpeg
+	- Ico
+
+* Bu 3 dosyayı da kali içindeki http sunucumuza ekledik
+
+* Bu 3 dosyayı birleştirmek için kullanacağımız araç -> autoit
+	- Windowsta çalışan bir araç olduğu için windowsa kurup oradan bu dosyaları birleştireceğiz.
+	- https://www.autoitscript.com/site/autoit/downloads/ adresinden indiriyoruz
+	- Kurulum için next next şeklinde ilerledik
+
+* https://github.com/atilsamancioglu/TrojanFactory/ reposundaki "autoit-download-and-execute.txt" dosyasını windowsa indiriyoruz
+
+* Ico dosyamızı windowsa indirdiriyoruz
+
+* GitHub'tan indirdiğimiz "autoit-download-and-execute.txt" dosyassının içinde "url1,url2" şeklinde iki yere de ico dışındaki
+dosyalarımızın kali web serve'ı üzerindeki yolunu url olarak giriyoruz.
+	- url1 => jpeg dosyasının yolu ile değiştireceğiz
+	- url2 => exe dosyasının yolu ile değiştireceğiz
+
+* Autoitt ile birlikte inen "compile...." programını çalıştırıyoruz. Açılan ekranda
+	- Source kısmına içerisine url'leri girfiğimiz txt dosyasının yolu
+	- Dest.. kısmına nereye kaydedeceğimiz
+	- Sonrakı kısımda da icon yolunu belitiyoruz 
+
+------------------------------
+
+	"right to left right character override"
+
+* Dosyaların uzantısının farklıymış gibi gösterme
+
+* Google'da pek çok araç vardır bununnla alakalı.
+	- "https://unicode-explorer.com/c/202E" gibi
+	- Bu site içerisindeki ilgili yeri kopyalıyoruz. Dosyanın ismini değiştirirken tersten yazılıyormuş gibi gösteriyor.
+
+* Bu işin mantığı : gpej.exe -> exe.jpeg (tersine çeviriyoruz)
+	tarotgepj.exe -> tarotexe.jpeg
+		 ----.---         ---.----
+
+* Dosyamızın adını yıkarıda olduğu gibi tersten yapıyoruz "...gepj.exe"
+
+* Unicode (yukarıdaki) gibi bir siteden right to left bağlantısnı kopyalıyoruz.
+
+* Dosyamızın adını değiştirmek için "...'gpej.exe'" içerisindeki tek tıranklı yeri seçip yapıştır yapıyoruz.
+
+* Sırasıyla bu harfleri girerek (g-p-e-j-.-e-x-e) enterlıyoruz
+
+* Bütün bu işlemlerin sonucunda tersten yazmaya çalışırken düzgün şekilde yazıldığı görüyoruz.
+	- Bu şekilde dosyanın uzantısı değişmeden değişmiş gibi gözükmüş olmakta.
+
+
+------------------------------
+
+	RİGHT TO LEFT İÇİN (?)
+
+I.
+
+* SORU : Siz maildeki dosyayı indirirken plexe.jpg olarak değil direk exe olarak göründü. Hemen alt kısımda. Bunu çözmenin yolu var mı? 
+(zip hariç)
+Bir de artık insanlar Mobile olarak genelde maillerine bakıyor. Bunun bir çözümü var mıdır?
+
+* CEVAP : Bu konular için SpyNote 'u araştırabilirsiniz. Mobil için çözümler üretiyor kapsamlı ve yaygın bir frameworktür.
+
+II.
+
+* SORU : karşı tarafa orjinal jpeg dosyasını göndersek bir link ile arka planda biz pdfproxy ile trojeni yamayabilir miyiz ?
+
+* CEVAP : selam, exe'nin içine yamayabiliyoruz bdfproxy ile. 
+
+
+------------------------------
+
+	SEND ANNONYMOUS EMAİL
+
+NOT : Arkadaşlar sizlere tavsiyem fake mail gönderecekseniz kesinlikle vpn servisi kullanmanız ve uzun araştırmalarım sonucunda mullvad
+vpn yani isviçre ülkesinin vpn si daha dogrusu isviçre kanunlarında log tutmak yok bilginiz olsun öneririm ve fake mail gönderdiginizde 
+ıp adresinin gözükecegi için bu vpn çok çok çok işe yarıyor . Log tutmuyor .
+
+------------------------------
+
+	NOT
+
+* Birisine tıklatmak istediğimiz bir dosyayı web üzerinden "file upload" diye yapacağımı bir bir siteden bu linki birine gönderebiliriz.
+
+* Atacağımız maili de başka bir mailmiş gibi de gösterebiliriz.
+	- "annonymous email sender" gibi bir arama yaparsak sonuçları görebiliriz.
+
+
+* SMS Spoofing
+
+------------------------------

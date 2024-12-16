@@ -1,0 +1,23 @@
+
+-------------------------
+
+	MALVARE TYPES
+
+* Ransonware 
+
+* Spyware
+	- Casus yazılımlar
+
+* Adware
+	- Reklam zararlı yazılımları
+
+* Worm
+	- Solucan türü yazılımlar
+	- Başka bilgisayarlara yayılmaya çalışan zararlı yazılımlara
+
+* Trojan
+	- Farklı bir şekilde kendisini gösteren yazılımlar
+
+* Botnet
+
+-------------------------

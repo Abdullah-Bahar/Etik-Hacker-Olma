@@ -1,0 +1,50 @@
+
+--------------------------
+
+* "namp cheat sheat" (kopya kağıdı) şekilnde google üzerinde yapacağımız aramada kullanımına güzel örnekler buluruz.
+
+--------------------------
+
+	NMAP
+
+* Ağ keşfi ve güvenlik denetimi için tasarlanmış ücretsiz açık kaynak bir araçtır.
+
+* NSE (Nmap Scritp Engine)
+	- Nmap içerisinde çalıştırılabilir scriptler vardır. 
+	- Biz de script ekelyerek çalıştırabiliyoruz.
+
+
+* T0, T1, T2, T3, T4, T5
+	-T0 : Paronayak tarama. Ağı dikkat çekmemek için yavaş tarar.
+	-T5 : En hızlı taramadır.
+	-T4 : Ağ içinde genelde bu kullanılır.
+	-T3 : Normal hız. 
+	NOT : Eğer ağ dışında bir tarama yapmak isteniyorsa T0-T3 arası kullanılması önerilir.
+  
+* -O
+	- İşletim sistemini öğrenmek için
+
+* -sV
+	- Versiyonalrı bulmaya çalışacak
+
+* -A : Agrasif tarama, sistem hakkında daha detaylı bilgi edinmeye çalışıyor.
+	-O içerir.
+	-sV içeriri.
+	--script içerir.
+
+* -p : Port taramak için kullanılır
+	-p 80-500 : Belli bir port aralığını tarar
+	-p- : Tüm portları tarar
+
+* -sC
+	- En çok kullanılan scriptleri açık olan portlarla alaka düzeyine göre çalıştırıyor
+	
+* -oN sonuc.txt
+	- Çıktıyı kaydeder
+	
+* --script <script_name>
+	- Taramada bir script çalıştırır.
+	- bazı scriptler argüman alabilir 
+		( --script <script_name>  --script-args"..." ) 
+
+-----------------------------

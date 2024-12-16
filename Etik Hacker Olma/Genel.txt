@@ -1,0 +1,9 @@
+
+---------------------
+
+* Linux'ta Ethernet veya Wi-Fi bağlantılarını komut satırı üzerinden yönetmek için kullanılan komutlar :
+	- nmcli (NetworkManager Command Line Interface)
+	- ip 
+
+---------------------
+
